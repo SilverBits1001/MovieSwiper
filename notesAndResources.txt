@@ -1,3 +1,7 @@
 gradienta.io
 
 https://reactnative.dev/docs/dimensions
+
+shadow depth generator: https://ethercreative.github.io/react-native-shadow-generator/
+
+create animated gradient border for cards based on gyroscope

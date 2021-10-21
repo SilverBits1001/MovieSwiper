@@ -4,36 +4,36 @@ import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { movies } from './db'
 import { Image } from 'react-native'
 import { useState, useEffect } from 'react'
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions } from 'react-native';
-
+import CardFlip from 'react-native-card-flip';
 
 export default function SwipeScreen() {
 
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
 
-console.log('window dimension', windowHeight*.80);
+  console.log('window dimension', windowHeight * .80);
 
-  const [cards, setCards] = useState(movies)
+  const [cards, setCards] = useState([])
   const [swipedAllCards, setSwipedAllCards] = useState(false)
   const [swipeDirection, setSwipeDirection] = useState('')
   const [cardIndex, setCardIndex] = useState(0)
   const [nameTitle, setnameTitle] = useState('')
   const [numberSwiped, setNumberSwiped] = useState(0)
 
-  /*   useEffect(() => {
+    useEffect(() => {
       fetch(
-        'https://api.themoviedb.org/3/trending/all/week?api_key=72f3e8dec55757728e250e173bc56745&page=2'
+        'https://api.themoviedb.org/3/trending/all/week?api_key=72f3e8dec55757728e250e173bc56745&page=1'
       )
         .then((response) => response.json())
         .then((data) => {
           setCards(data.results);
           console.log('API was fetched again');
         });
-    }, []); */
+    }, []);
 
 
 
@@ -47,33 +47,35 @@ console.log('window dimension', windowHeight*.80);
 
       card.name ? titleName = card.name : titleName = card.title
       return (
-        <LinearGradient
-          colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']}
-          start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-          style={styles.grediant}
-        >
-          <View style={styles.card}>
-            <Image
-              resizeMode='cover'
-              style={{
-                width: '100%',
-                height: '100%',
-                flex: 3,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20
-              }}
-              source={{
-                uri: `https://image.tmdb.org/t/p/w500${card.poster_path}`,
-              }}
-            />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.text}>{titleName}</Text>
-              <ScrollView>
-                <Text style={{ padding: 10, color: 'white' }}>{card.overview}</Text>
-              </ScrollView>
+        <View style={styles.shadow}>
+          <LinearGradient
+            colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']}
+            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+            style={styles.gradiantWrapper}
+          >
+            <View style={styles.card}>
+              <Image
+                resizeMode='cover'
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  flex: 3,
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20
+                }}
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w500${card.poster_path}`,
+                }}
+              />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.text}>{titleName}</Text>
+                <ScrollView>
+                  <Text numberOfLines={4} style={styles.movieDescription}>{card.overview}</Text>
+                </ScrollView>
+              </View>
             </View>
-          </View>
-        </LinearGradient>
+          </LinearGradient>
+        </View>
 
       )
     }
@@ -112,6 +114,8 @@ console.log('window dimension', windowHeight*.80);
   }
   return (
     <View style={styles.container}>
+
+
       <View >
         <Swiper
           ref={swiper => {
@@ -232,16 +236,38 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 20
   },
-  grediant: {
+  gradiantWrapper: {
     height: '80%',
     width: '100%',
     justifyContent: 'center',
     alignSelf: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     borderRadius: 22,
     paddingRight: 2,
-    paddingBottom:2
+    paddingBottom: 2,
+
+  },
+  shadow:{
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.50,
+    shadowRadius: 3.84,
+    
+    elevation: 5,
+    height: '100%',
+    width: '100%',
+  },
+  movieDescription:{
+
+    alignSelf:'flex-start',
+    
+    padding: 15,
+    color: 'white'
   }
+
 
 })
 

@@ -18,7 +18,7 @@ function MyTabs() {
       screenOptions={{
         "tabBarActiveTintColor": "#fff",
         "tabBarInactiveTintColor": "lightgray",
-        "tabBarActiveBackgroundColor": "#0d1321",
+        "tabBarActiveBackgroundColor": "#4C64FF",
         "tabBarInactiveBackgroundColor": "#1d2d44",
         "headerShown": false,
         "tabBarStyle": [

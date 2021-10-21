@@ -1,0 +1,3 @@
+gradienta.io
+
+https://reactnative.dev/docs/dimensions

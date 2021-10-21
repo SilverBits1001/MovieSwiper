@@ -5,13 +5,17 @@ import { movies } from './db'
 import { Image } from 'react-native'
 import { useState, useEffect } from 'react'
 import { ScrollView } from 'react-native-gesture-handler'
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient'
+import { Dimensions } from 'react-native';
 
 
 export default function SwipeScreen() {
 
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
+console.log('window dimension', windowHeight*.80);
 
   const [cards, setCards] = useState(movies)
   const [swipedAllCards, setSwipedAllCards] = useState(false)
@@ -43,28 +47,33 @@ export default function SwipeScreen() {
 
       card.name ? titleName = card.name : titleName = card.title
       return (
-        
-        <View style={styles.card}>
-          <Image
-            resizeMode='cover'
-            style={{
-              width: '100%',
-              height: '100%',
-              flex: 3,
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20
-            }}
-            source={{
-              uri: `https://image.tmdb.org/t/p/w500${card.poster_path}`,
-            }}
-          />
-          <View style={{ flex: 1 }}>
-            <Text style={styles.text}>{titleName}</Text>
-            <ScrollView>
-              <Text style={{ padding: 10, color: 'white' }}>{card.overview}</Text>
-            </ScrollView>
+        <LinearGradient
+          colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']}
+          start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+          style={styles.grediant}
+        >
+          <View style={styles.card}>
+            <Image
+              resizeMode='cover'
+              style={{
+                width: '100%',
+                height: '100%',
+                flex: 3,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20
+              }}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w500${card.poster_path}`,
+              }}
+            />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.text}>{titleName}</Text>
+              <ScrollView>
+                <Text style={{ padding: 10, color: 'white' }}>{card.overview}</Text>
+              </ScrollView>
+            </View>
           </View>
-        </View>
+        </LinearGradient>
 
       )
     }
@@ -110,7 +119,7 @@ export default function SwipeScreen() {
           }}
           style={{ height: 50 }}
           backgroundColor={'#4FD0E9'}
-
+          infinite
           onSwiped={() => this.onSwiped('general')}
           onSwipedLeft={() => this.onSwiped('left')}
           onSwipedRight={() => this.onSwiped('right')}
@@ -196,13 +205,13 @@ const styles = StyleSheet.create({
   },
   card: {
     borderRadius: 20,
-    borderWidth: 2,
-    height: '80%',
+    height: '100%',
     width: '100%',
     borderColor: '#272640',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#3a506b',
+    margin: 2,
   },
   text: {
     textAlign: 'center',
@@ -223,10 +232,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 20
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#0d1321',
-  },
+  grediant: {
+    height: '80%',
+    width: '100%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems:'center',
+    borderRadius: 22,
+    paddingRight: 2,
+    paddingBottom:2
+  }
 
 })
 

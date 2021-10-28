@@ -4,34 +4,46 @@ import MainComponent from './components/MainComponent';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './components/Home';
-import ListsComponent from './components/ListsComponent';
+import ListComponent from './components/ListComponent';
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        headerShown: false
 
-      }}
       screenOptions={{
-        "tabBarActiveTintColor": "#fff",
-        "tabBarInactiveTintColor": "lightgray",
-        "tabBarActiveBackgroundColor": "#4C64FF",
-        "tabBarInactiveBackgroundColor": "#1d2d44",
-        "headerShown": false,
-        "tabBarStyle": [
-          {
-            "display": "flex",
-            "backgroundColor": "red"
-          },
-          null
-        ]
+        display: "flex",
+        fontSize: 20,
+        borderRadius: 20,
+        tabBarStyle: {
+          elevation: 0,
+          marginLeft: 10,
+          marginRight: 10,
+          borderRadius: 15,
+          height: 50,
+          borderRadius: 30,
+          backgroundColor:'red'
+        },
+        headerShown: false,
+        tabBarActiveTintColor: "#fff",
+        tabBarInactiveTintColor: "lightgray",
+        tabBarActiveBackgroundColor: "#4C64FF",
+        tabBarInactiveBackgroundColor: "#1d2d44",
+        tabBarIconStyle: {
+          display: 'none'
+        },
+        tabBarLabelStyle: {
+          flex: 1,
+          backgroundColor: 'transparent',
+          padding: 12,
+          fontSize: 18
+        }
+
       }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Lists" component={ListsComponent} />
+      <Tab.Screen name="Your Movies" component={ListComponent} />
     </Tab.Navigator >
   );
 }

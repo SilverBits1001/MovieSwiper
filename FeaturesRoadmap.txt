@@ -1,0 +1,9 @@
+-flip card to expand details
+
+-fix the way cards are loaded
+
+-store and update swiped data
+
+-fix top UI header displaying 'Genre'
+
+-

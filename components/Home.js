@@ -9,7 +9,7 @@ export default function Home() {
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{color: 'white', fontSize:20}} >Movies | TV Shows</Text>
             </View>
-            <View style={{backgroundColor:'red'}}>
+            <View >
                 <SwipeScreen />
             </View>
         </View>

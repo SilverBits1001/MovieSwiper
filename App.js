@@ -5,13 +5,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './components/Home';
 import ListComponent from './components/ListComponent';
-
+import GenreComponent from './components/GenresComponent'
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
     <Tab.Navigator
-
+    initialRouteName="Discover"
       screenOptions={{
         display: "flex",
         fontSize: 20,
@@ -23,14 +23,15 @@ function MyTabs() {
           borderRadius: 15,
           height: 50,
           borderRadius: 30,
-          backgroundColor:'red'
+          backgroundColor: "#1d2d44"
         },
         headerShown: false,
+        headerTintColor: 'white',
         tabBarActiveTintColor: "#fff",
-        tabBarInactiveTintColor: "lightgray",
-        tabBarActiveBackgroundColor: "#4C64FF",
+        tabBarInactiveTintColor: "#888",
+/*         tabBarActiveBackgroundColor: "#4C64FF",
         tabBarInactiveBackgroundColor: "#1d2d44",
-        tabBarIconStyle: {
+ */        tabBarIconStyle: {
           display: 'none'
         },
         tabBarLabelStyle: {
@@ -42,8 +43,16 @@ function MyTabs() {
 
       }}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Your Movies" component={ListComponent} />
+      <Tab.Screen
+        name="Genres"
+        component={GenreComponent} />
+
+      <Tab.Screen
+        name="Discover"
+        component={Home} />
+      <Tab.Screen
+        name="Your Movies"
+        component={ListComponent} />
     </Tab.Navigator >
   );
 }
@@ -65,7 +74,7 @@ export default function App() {
 
     <SafeAreaView style={styles.container}>
       <NavigationContainer theme={MyTheme}>
-        <MyTabs />
+        <MyTabs  />
       </NavigationContainer>
     </SafeAreaView>
 
@@ -77,7 +86,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0d1321',
+    backgroundColor: '#0d132A',
 
   },
 });

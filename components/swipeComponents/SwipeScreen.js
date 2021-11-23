@@ -31,7 +31,7 @@ export default function SwipeScreen() {
     const response = await fetch(url)
     const data = await response.json()
     setCards(cards.concat(data.results));
-    console.log('API was fetched again');
+    console.log(cards);
 
   };
 
@@ -70,7 +70,7 @@ export default function SwipeScreen() {
                   resizeMode='cover'
                   style={{
                     width: '100%',
-                    height: '100%',
+             
                     flex: 3,
                     borderTopLeftRadius: 20,
                     borderTopRightRadius: 20,
@@ -108,7 +108,7 @@ export default function SwipeScreen() {
       setPage(page + 1)
       handleFetch()
     }
-    console.log(usersMovies)
+    console.log('!!!!!!!!!The user has liked', usersMovies.length)
 
 
 
@@ -165,7 +165,7 @@ export default function SwipeScreen() {
 
           cards={cards}
           cardIndex={cardIndex}
-          cardVerticalMargin={20}
+          cardVerticalMargin={5}
           marginTop={0}
           renderCard={renderCard}
           onSwipedAll={onSwipedAllCards}
@@ -230,19 +230,19 @@ export default function SwipeScreen() {
             top: {
               title: <Icon
 
-              name='star'
-              type='font-awesome'
-              iconStyle={{ color: 'gold', padding: 10, }}
-              size={70}
-            />,
+                name='star'
+                type='font-awesome'
+                iconStyle={{ color: 'gold', padding: 10, }}
+                size={70}
+              />,
               style: {
                 label: label,
                 wrapper: {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'start',
-                  marginTop:'100%',
-                  paddingTop:'10%'
+                  marginTop: '100%',
+                  paddingTop: '10%'
                 }
               }
             }
@@ -251,7 +251,6 @@ export default function SwipeScreen() {
           animateCardOpacity
           swipeBackCard
         >
-          <Button onPress={() => this.swiper.swipeBack()} title='Swipe Back' />
         </Swiper>
       </View>
     </View >
@@ -262,7 +261,6 @@ export default function SwipeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3a506b'
   },
   card: {
     borderRadius: 20,
@@ -274,7 +272,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     margin: 2,
     paddingLeft: 1,
-    paddingTop: 1
+    paddingTop: 1,
+    paddingBottom: 5
   },
   text: {
     textAlign: 'left',
@@ -298,8 +297,8 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   gradiantWrapper: {
-    height: '80%',
-    width: '100%',
+    height: '75%', //Controls the height of the actual cards
+    width: '95%',  //Contols width of the actual cards
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
@@ -309,7 +308,6 @@ const styles = StyleSheet.create({
 
   },
   shadow: {
-
     shadowColor: "#000",
     shadowOffset: {
       width: -10,

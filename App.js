@@ -1,17 +1,20 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import MainComponent from './components/MainComponent';
+import MainComponent from './features/MainComponent';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './components/Home';
-import ListComponent from './components/ListComponent';
-import GenreComponent from './components/GenresComponent'
+import Home from './features/Home';
+import ListComponent from './features/ListComponent';
+import GenreComponent from './features/GenresComponent'
+import Store from './app/store'
+import { Provider } from 'react-redux'
+
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
     <Tab.Navigator
-    initialRouteName="Discover"
+      initialRouteName="Discover"
       screenOptions={{
         display: "flex",
         fontSize: 20,
@@ -71,12 +74,13 @@ const MyTheme = {
 
 export default function App() {
   return (
-
-    <SafeAreaView style={styles.container}>
-      <NavigationContainer theme={MyTheme}>
-        <MyTabs  />
-      </NavigationContainer>
-    </SafeAreaView>
+    <Provider store={Store}>
+      <SafeAreaView style={styles.container}>
+        <NavigationContainer theme={MyTheme}>
+          <MyTabs />
+        </NavigationContainer>
+      </SafeAreaView>
+    </Provider>
 
 
 

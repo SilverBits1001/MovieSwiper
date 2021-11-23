@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Card } from 'react-native-elements'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
+import { useSelector, useDispatch } from 'react-redux'
 
 const example = {
     "backdrop_path": "/oaGvjB0DvdhXhOAuADfHb261ZHa.jpg",
@@ -29,6 +30,8 @@ const example = {
 
 
 export default function ListComponent() {
+    const count = useSelector((state) => state.usersMovies.value)
+
     return (
         <View>
 
@@ -37,7 +40,7 @@ export default function ListComponent() {
                     h4
                     style={{ textAlign: 'left', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.text}>
-                        Movies you're interested in
+                        Movies you're interested in {count}
                     </Text>
                     <Icon
                         name='angle-right'

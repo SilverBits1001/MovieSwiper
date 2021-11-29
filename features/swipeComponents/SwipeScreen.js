@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Swiper from 'react-native-deck-swiper'
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import { movies } from './db'
+import { movies } from '../db'
 import { Image } from 'react-native'
 import { useState, useEffect } from 'react'
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
@@ -9,10 +9,13 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions } from 'react-native';
 import CardFlip from 'react-native-card-flip';
 import { Icon } from 'react-native-elements/dist/icons/Icon'
+import { useSelector, useDispatch } from 'react-redux'
+import { addMovie } from './swipeScreenSlice';
+
 
 export default function SwipeScreen() {
 
-
+  const dispatch = useDispatch()
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
@@ -102,6 +105,7 @@ export default function SwipeScreen() {
     setCardIndex(cardIndex + 1)
     if (type === 'right') {
       setUserMovies(usersMovies.concat(movies[cardIndex]))
+      dispatch(addMovie(cards[cardIndex]))
     }
     console.log('page number is _________', page, 'this is the index you are currentyl on %%%%%', cardIndex);
     if (cardIndex === cards.length - 4) {
@@ -153,7 +157,7 @@ export default function SwipeScreen() {
           ref={swiper => {
             this.swiper = swiper
           }}
-          style={{ height: 50 }}
+          style={{ height: 50,}}
           backgroundColor={'#4FD0E9'}
           infinite={false}
           onSwiped={() => this.onSwiped('general')}
@@ -250,13 +254,16 @@ export default function SwipeScreen() {
           animateOverlayLabelsOpacity
           animateCardOpacity
           swipeBackCard
-        >
-        </Swiper>
+        />
+       
       </View>
     </View >
   )
 
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -334,4 +341,3 @@ const styles = StyleSheet.create({
 
 
 })
-

@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    value: 0,
-    status: 'idle',
+    value: [
+        {},{},{}
+    ],
 };
 
 export const swipeScreenSlice = createSlice({
@@ -10,7 +11,13 @@ export const swipeScreenSlice = createSlice({
     initialState,
     reducers: {
         addMovie: (state, action) => {
-            state.value += 1
+            if(Object.keys(state.value[0]).length === 0 ){
+                state.value = [action.payload]
+        
+            } else{
+                state.value.push(action.payload)
+            }
+
         }
     }
 

@@ -8,6 +8,9 @@ import ListComponent from './features/ListComponent';
 import GenreComponent from './features/GenresComponent'
 import Store from './app/store'
 import { Provider } from 'react-redux'
+import { useSelector } from 'react-redux';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -46,16 +49,15 @@ function MyTabs() {
 
       }}
     >
-      <Tab.Screen
-        name="Genres"
-        component={GenreComponent} />
+
 
       <Tab.Screen
         name="Discover"
         component={Home} />
       <Tab.Screen
-        name="Your Movies"
-        component={ListComponent} />
+        name="My Movies"
+        component={ListComponent}
+      />
     </Tab.Navigator >
   );
 }
@@ -64,7 +66,7 @@ const MyTheme = {
   dark: false,
   colors: {
     primary: 'rgb(255, 45, 85)',
-    background: '#0d1321',
+    background: '#0d132A',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(28, 28, 30)',
     border: '#0d1321',

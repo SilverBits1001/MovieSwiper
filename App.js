@@ -9,7 +9,7 @@ import GenreComponent from './features/GenresComponent'
 import Store from './app/store'
 import { Provider } from 'react-redux'
 import { useSelector } from 'react-redux';
-
+import HomeScreen from './features/HomeScreen'
 
 
 const Tab = createBottomTabNavigator();
@@ -54,6 +54,9 @@ function MyTabs() {
       <Tab.Screen
         name="Discover"
         component={Home} />
+      <Tab.Screen
+        name="Genre"
+        component={GenreComponent} />
       <Tab.Screen
         name="My Movies"
         component={ListComponent}

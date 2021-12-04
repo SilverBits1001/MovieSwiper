@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, ImageBackground, ScrollView, FlatList, SectionList, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useSelector } from 'react-redux'
+
 
 /* Action, Adventure, Animation, Comedy, Crime, Documentary, Drama, Family, Fantasy, History, Horror, Music, Mystery, Romance, Science Fiction, Thriller, TV Movie, War, and Western. */
 /* const genres =['Comedy', 'Action', 'Romance', 'Drama', 'Sci-Fi', 'Thriller', 'Animation', 'Adventure', 'Family', 'Documentary', 'Mystery', 'Musical', ] */
@@ -43,6 +44,10 @@ const example = {
     "popularity": 10219.887,
     "media_type": "tv"
 }
+
+
+
+
 
 const genreList = [
 
@@ -199,18 +204,19 @@ const RenderAllMovies = ({ title, usersMovies }) => {
     return (
 
         <View style={styles.container}>
-            <Text style={{ color: 'white', fontSize: 21, padding: 5 }} >{title}</Text>
+            <Text style={{ color: 'white', fontSize: 21, padding: 5, }} >{title}</Text>
 
             <FlatList
                 horizontal={false}
-                contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'flex-start', paddingBottom: 75 }}
+
+                ListFooterComponent={<RenderAllMovieGenres />}
+                contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'flex-start', paddingBottom: '100%' }}
                 data={usersMovies}
-numColumns={3}
+                numColumns={3}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <TouchableOpacity
                         style={styles.button}
-
                     >
                         <View
                             style={{ margin: 7 }}
@@ -252,10 +258,10 @@ numColumns={3}
     )
 }
 
-const RenderMovieGenres = ({ title, usersMovies, genreId }) => {
+const RenderMovieGenre = ({ title, usersMovies, genreId }) => {
 
     // const filteredGenres = genres.filter(movie => movie.genre_ids === genre_id)
-    if(Object.keys(usersMovies[0]).length === 0 ){
+    if (Object.keys(usersMovies[0]).length === 0) {
 
         return <View></View>
     }
@@ -264,10 +270,10 @@ const RenderMovieGenres = ({ title, usersMovies, genreId }) => {
 
     console.log('this is the current genre is', genreId);
     console.log(filteredUsersMovies);
-    if(usersMovies.length < 15){
+    if (usersMovies.length < 10) {
         return <View></View>
     }
-    if(filteredUsersMovies.length === 0){
+    if (filteredUsersMovies.length === 0) {
         return <View></View>
     }
     return (
@@ -277,13 +283,14 @@ const RenderMovieGenres = ({ title, usersMovies, genreId }) => {
 
             <FlatList
                 horizontal={true}
-                contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'flex-start', paddingBottom: 75 }}
+                keyExtractor={(item, index) => index.toString()}
+                contentContainerStyle={{ alignItems: 'flex-start', justifyContent: 'flex-start', margin: 5, padding: 5 }}
                 data={filteredUsersMovies}
-
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item }) => (
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item, index }) => (
                     <TouchableOpacity
                         style={styles.button}
+
 
                     >
                         <View
@@ -326,29 +333,62 @@ const RenderMovieGenres = ({ title, usersMovies, genreId }) => {
     )
 }
 
-export default function GenreComponent() {
+const RenderAllMovieGenres = () => {
     const usersMovies = useSelector((state) => state.usersMovies.value)
 
+
+    return (
+        <ScrollView >
+            {genreList.map((genre, index) => (
+
+                <RenderMovieGenre
+                    key={index}
+                    style={{ padding: 600 }}
+                    usersMovies={usersMovies}
+                    title={genre.name}
+                    genreId={genre.id} />
+            ))}
+        </ScrollView>
+
+    )
+}
+
+export default function GenreComponent() {
+    const [loadedGenreCategories, setLoadedGenreCategories] = useState([])
+
+    const handleGenreFetch = async (mediaType) => {
+        const url = `https://api.themoviedb.org/3/genre/${mediaType}/list?api_key=72f3e8dec55757728e250e173bc56745&language=en-US`
+        const response = await fetch(url)
+        const data = await response.json()
+        data.genres.map(genre => {
+            setLoadedGenreCategories(loadedGenreCategories.push({ id: genre.id, name: genre.name }))
+        })
+    };
+
+
+
+    useEffect(() => {
+        handleGenreFetch('movie')
+        handleGenreFetch('tv')
+    }, []);
+
+
+    const usersMovies = useSelector((state) => state.usersMovies.value)
 
 
 
     return (
 
-        <ScrollView>
+        <View >
+
             <RenderAllMovies
-                style={{}}
+
                 usersMovies={usersMovies}
                 title={'All Movies'} />
 
-            {genreList.map(genre => (
-                <RenderMovieGenres
-                    style={{}}
-                    usersMovies={usersMovies}
-                    title={genre.name}
-                    genreId={genre.id} />
-            ))}
 
-        </ScrollView>
+
+        </View>
     )
 }
 
@@ -356,6 +396,7 @@ const styles = StyleSheet.create({
     container: {
 
         justifyContent: 'flex-start',
+
 
     },
     img: {

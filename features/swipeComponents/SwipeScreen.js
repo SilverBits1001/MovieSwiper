@@ -32,9 +32,11 @@ export default function SwipeScreen() {
   const handleFetch = async () => {
     const url = 'https://api.themoviedb.org/3/trending/all/week?api_key=72f3e8dec55757728e250e173bc56745&page=' + page
     const response = await fetch(url)
+    console.log('~~~~~~~~~~~~~~~~~~~~~the loaded screen is page ',page);
     const data = await response.json()
     setCards(cards.concat(data.results));
     console.log(cards);
+    setPage(page + 1) // increments page number after each fetch request
 
   };
 
@@ -85,9 +87,9 @@ export default function SwipeScreen() {
                 />
                 <View style={{ flex: 1, }}>
                   <Text style={styles.text}>{titleName}</Text>
-                  <ScrollView>
+                  <View>
                     <Text numberOfLines={4} style={styles.movieDescription}>{card.overview}</Text>
-                  </ScrollView>
+                  </View>
                 </View>
               </View>
             </LinearGradient>
@@ -109,7 +111,6 @@ export default function SwipeScreen() {
     }
     console.log('page number is _________', page, 'this is the index you are currentyl on %%%%%', cardIndex);
     if (cardIndex === cards.length - 4) {
-      setPage(page + 1)
       handleFetch()
     }
     console.log('!!!!!!!!!The user has liked', usersMovies.length)

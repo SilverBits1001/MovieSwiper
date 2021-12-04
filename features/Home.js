@@ -9,17 +9,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import GenreComponent from './ListComponent';
 
 
-const HomeScreen = createNativeStackNavigator();
 
-function MyStack() {
-    return (
-        <HomeScreen.Navigator>
-            <HomeScreen.Screen name="Genres" component={GenreComponent} />
-        </HomeScreen.Navigator>
-    );
-}
 
-export default function Home() {
+export default function Home({navigation}) {
     const count = useSelector((state) => state.usersMovies.value)
     const dispatch = useDispatch()
 
@@ -29,7 +21,7 @@ export default function Home() {
                 <Text style={{ color: 'white', fontSize: 21, padding: 5 }} >Discover </Text>
                 <Button
                     style={{}}
-                    onPress={() => MyStack().navigate('Genres')}
+                    onPress={() => navigation.navigate('Genre')}
                     icon={
                         <Icon
                             name='filter-list'

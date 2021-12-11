@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import Swiper from 'react-native-deck-swiper'
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Button, SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { movies } from '../db'
 import { Image } from 'react-native'
 import { useState, useEffect } from 'react'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions } from 'react-native';
 import CardFlip from 'react-native-card-flip';
 import { Icon } from 'react-native-elements/dist/icons/Icon'
 import { useSelector, useDispatch } from 'react-redux'
 import { addMovie } from './swipeScreenSlice';
+import { fonts } from 'react-native-elements/dist/config'
 
-
-export default function SwipeScreen() {
+export default function SwipeScreen({navigation}) {
 
   const dispatch = useDispatch()
   const windowWidth = Dimensions.get('window').width;
@@ -28,11 +27,12 @@ export default function SwipeScreen() {
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(true)
   const [usersMovies, setUserMovies] = useState([])
+  const [cardStack, setCardStack] = useState([])
 
   const handleFetch = async () => {
     const url = 'https://api.themoviedb.org/3/trending/all/week?api_key=72f3e8dec55757728e250e173bc56745&page=' + page
     const response = await fetch(url)
-    console.log('~~~~~~~~~~~~~~~~~~~~~the loaded screen is page ',page);
+    console.log('~~~~~~~~~~~~~~~~~~~~~the loaded screen is page ', page);
     const data = await response.json()
     setCards(cards.concat(data.results));
     console.log(cards);
@@ -45,61 +45,98 @@ export default function SwipeScreen() {
     handleFetch()
   }, []);
 
-
+  /*   <View style={styles.container}>
+      <CardFlip style={styles.cardContainer} ref={card => (this.card = card)}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={[styles.card, styles.card1]}
+          onPress={() => this.card.flip()}>
+          <Text style={styles.label}>AB</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={[styles.card, styles.card2]}
+          onPress={() => this.card.flip()}>
+          <Text style={styles.label}>CD</Text>
+        </TouchableOpacity>
+      </CardFlip>
+    </View> */
 
 
   const titleName = ''
   renderCard = (card, index, titleName) => {
-
     console.log('Movies are now loaded to cards with a length of', cards.length)
     if (card === undefined) {
       return <View></View>
     } else {
-
+      // onsole.log('this' ,this.);
       card.name ? titleName = card.name : titleName = card.title
       return (
-        <View style={styles.shadow}>
-          <LinearGradient
-            colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']}
-            start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
-            style={styles.gradiantWrapper}
-          >
-            <LinearGradient
-              colors={['#457b9d', '#1d3557']}
-              start={{ x: 1.0, y: 1.0 }} end={{ x: 0.0, y: 1.0 }}
-              style={styles.card}
+
+        <View style={styles.shadow}
+          ref={view => {
+            this.view = view
+          }}>
+          <CardFlip style={styles.cardFlipContainer} ref={(currentCard) => (this['card' + cards.indexOf(card)] = currentCard)}>
+            <View
+              activeOpacity={1}
             >
+              <LinearGradient
+                colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']}
+                start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+                style={styles.gradiantWrapper}
+              >
+                <LinearGradient
+                  colors={['#457b9d', '#1d3557']}
+                  start={{ x: 1.0, y: 1.0 }} end={{ x: 0.0, y: 1.0 }}
+                  style={styles.card}
+                >
+                  <View style={styles.card}>
+                    <Image
+                      resizeMode='cover'
+                      style={{
+                        width: '100%',
 
-              <View style={styles.card}>
-                <Image
-                  resizeMode='cover'
-                  style={{
-                    width: '100%',
-             
-                    flex: 3,
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
+                        flex: 3,
+                        borderTopLeftRadius: 20,
+                        borderTopRightRadius: 20,
 
-                  }}
-                  source={{
-                    uri: `https://image.tmdb.org/t/p/w500${card.poster_path}`,
-                  }}
-                />
-                <View style={{ flex: 1, }}>
-                  <Text style={styles.text}>{titleName}</Text>
-                  <View>
-                    <Text numberOfLines={4} style={styles.movieDescription}>{card.overview}</Text>
+                      }}
+                      source={{
+                        uri: `https://image.tmdb.org/t/p/w500${card.poster_path}`,
+                      }}
+                    />
+                    <View style={{ flex: 1, }}>
+                      <Text style={styles.text}>{titleName}</Text>
+                      <View>
+                        <Text numberOfLines={4} style={styles.movieDescription}>{card.overview}</Text>
+                      </View>
+                    </View>
                   </View>
-                </View>
-              </View>
+                </LinearGradient>
+              </LinearGradient>
+            </View>
+            <LinearGradient
+              colors={['#00FFFF', '#17C8FF', '#329BFF', '#4C64FF', '#6536FF', '#8000FF']} 
+           //   colors={['#8000FF', '#6536FF', '#4C64FF',  '#329BFF', '#17C8FF','#00FFFF',   ]}
+              start={{ x: 0.0, y: 1.0 }} end={{ x: 1.0, y: 1.0 }}
+              style={styles.gradiantWrapper}
+            >
+              <LinearGradient
+                colors={['#457b9d', '#1d3557']}
+                start={{ x: 1.0, y: 1.0 }} end={{ x: 0.0, y: 1.0 }}
+                style={styles.card}
+              >
+                <Text style={{color:'white', fontSize: 20 }}>Backside of Card</Text>
+              </LinearGradient>
             </LinearGradient>
-          </LinearGradient>
+          </CardFlip>
+
+
         </View>
 
       )
     }
-
-
   };
 
   onSwiped = (type) => {
@@ -158,15 +195,15 @@ export default function SwipeScreen() {
           ref={swiper => {
             this.swiper = swiper
           }}
-          style={{ height: 50,}}
+          style={{ height: 50, }}
           backgroundColor={'#4FD0E9'}
           infinite={false}
           onSwiped={() => this.onSwiped('general')}
           onSwipedLeft={() => this.onSwiped('left')}
           onSwipedRight={() => this.onSwiped('right')}
           onSwipedTop={() => this.onSwiped('top')}
-          onSwipedBottom={() => this.onSwiped('bottom')}
-          onTapCard={this.swipeLeft}
+          onSwipedBottom={() => navigation.navigate('Movie Details')}
+          onTapCard={() => this['card' + cardIndex].flip()}
 
           cards={cards}
           cardIndex={cardIndex}
@@ -256,7 +293,7 @@ export default function SwipeScreen() {
           animateCardOpacity
           swipeBackCard
         />
-       
+
       </View>
     </View >
   )
@@ -305,8 +342,8 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   gradiantWrapper: {
-    height: '75%', //Controls the height of the actual cards
-    width: '95%',  //Contols width of the actual cards
+    height: '100%', //Controls the height of the actual cards
+    width: '100%',  //Contols width of the actual cards
     justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
@@ -328,17 +365,41 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  containerShadow: {
 
-
-  },
   movieDescription: {
 
     alignSelf: 'flex-start',
     paddingLeft: 15,
     paddingTop: 0,
-    color: 'white'
-  }
+    color: 'white',
+    fontWeight: '300' 
+  },
+
+
+  cardFlipContainer: {
+    height: '73%', //Controls the height of the actual cards
+    width: '93%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginBottom: 100
+  },
+
+  card1: {
+    backgroundColor: '#FE474C',
+  },
+  card2: {
+    backgroundColor: '#FEB12C',
+  },
+  label: {
+    lineHeight: 470,
+    textAlign: 'center',
+    fontSize: 55,
+    fontFamily: 'System',
+    color: '#ffffff',
+    backgroundColor: 'transparent',
+  },
+
 
 
 })

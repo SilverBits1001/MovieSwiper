@@ -17,15 +17,15 @@ export default function Home({navigation}) {
 
     return (
         <View style={styles.container}>
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 10 }}>
-                <Text style={{ color: 'white', fontSize: 21, padding: 5 }} >Discover </Text>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  paddingHorizontal: 15 }}>
+                <Text style={{ color: 'white', fontSize: 21, }} >Discover </Text>
                 <Button
                     style={{}}
                     onPress={() => navigation.navigate('Genre')}
                     icon={
                         <Icon
-                            name='filter-list'
-                            type='material-icons'
+                            name='filter-outline'
+                            type='ionicon'
                             size={30}
                             color='#517fa4'
                         />
@@ -34,7 +34,7 @@ export default function Home({navigation}) {
                 />
             </View>
             <View style={{ flex: 15, }} >
-                <SwipeScreen />
+                <SwipeScreen navigation={navigation} />
             </View>
         </View>
     )
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#0d132A',
+        paddingTop:50
 
     }
 })

@@ -7,3 +7,4 @@ shadow depth generator: https://ethercreative.github.io/react-native-shadow-gene
 create animated gradient border for cards based on gyroscope
 
 ui ideas https://dribbble.com/shots/5309805-Cinema-App/attachments/10798148?mode=media
+         https://static.collectui.com/shots/4417901/film-ticket-booking-large

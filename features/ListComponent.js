@@ -204,7 +204,7 @@ const RenderAllMovies = ({ title, usersMovies }) => {
     return (
 
         <View style={styles.container}>
-            <Text style={{ color: 'white', fontSize: 21, padding: 5, }} >{title}</Text>
+            <Text style={{ color: 'white', fontSize: 21, paddingHorizontal: 15, }} >{title}</Text>
 
             <FlatList
                 horizontal={false}
@@ -396,6 +396,7 @@ const styles = StyleSheet.create({
     container: {
 
         justifyContent: 'flex-start',
+        paddingTop:50
 
 
     },

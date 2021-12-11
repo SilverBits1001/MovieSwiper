@@ -2,6 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, View, ImageBackground, ScrollView, FlatList, SectionList, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Button } from 'react-native-elements/dist/buttons/Button'
+import { NavigationContainer } from '@react-navigation/native'
+import { Icon } from 'react-native-elements/dist/icons/Icon'
 
 
 /* Action, Adventure, Animation, Comedy, Crime, Documentary, Drama, Family, Fantasy, History, Horror, Music, Mystery, Romance, Science Fiction, Thriller, TV Movie, War, and Western. */
@@ -53,7 +56,7 @@ const RenderCard = ({ genres }) => {
                                         tintColor: 'white',
                                     }}
                                     source={item.src}
-                                  
+
                                 />
                                 <View>
                                     <Text style={styles.cardText}>
@@ -74,10 +77,23 @@ const RenderCard = ({ genres }) => {
     )
 }
 
-export default function GenreComponent() {
+export default function GenreComponent({ navigation }) {
     return (
 
         <View>
+            <Button
+                icon={
+                    <Icon
+                        name='arrow-back-outline'
+                        type='ionicon'
+                        size={35}
+                        color='#517fa4'
+                    />
+                }
+                onPress={() => navigation.goBack()}
+                style={{ alignSelf: 'flex-start', paddingLeft: 10 }}
+
+            />
             <RenderCard
                 style={{ flex: 1 }}
                 genres={genres} />

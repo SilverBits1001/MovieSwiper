@@ -1,8 +1,8 @@
 -flip card to expand details
 
--fix the way cards are loaded
+-fix the way cards are loaded x
 
--store and update swiped data
+-store and update swiped data x
 
 -fix top UI header displaying 'Genre'
 
